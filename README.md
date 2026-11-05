@@ -23,8 +23,6 @@ The roadmap is built to master FPGA fundamentals, not to fake a trading stack. E
 
 ## Fundamentals
 
-What each fundamental means in practice, and where it gets proven.
-
 | Fundamental | Mastery looks like | Proven in |
 |---|---|---|
 | **CDC** | Picks the right crossing for level, pulse, bus, or stream; can explain why the wrong one fails | 03, 04, 09 |
