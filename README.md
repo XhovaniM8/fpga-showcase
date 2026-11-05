@@ -2,8 +2,6 @@
 
 Index of my FPGA / RTL / hardware-adjacent projects. Each links out to its own repo.
 
-The roadmap is built to master FPGA fundamentals, not to fake a trading stack. Each project is a small module, built properly, verified properly, and measured on hardware. The trading pipeline (feed handler → order book → risk gate) is the context that ties them together.
-
 ## Hardware
 
 | Board | Notes |
@@ -20,8 +18,14 @@ The roadmap is built to master FPGA fundamentals, not to fake a trading stack. E
 | [vending-machine-controller-vhdl](https://github.com/XhovaniM8/vending-machine-controller-vhdl) | Finite state machine vending machine controller on Nexys 3 | Done |
 | [01-binary-counter-sync-reset](https://github.com/XhovaniM8/01-binary-counter-sync-reset) | Binary counter with synchronous reset via button, built on the Arty Z7-10 | Done |
 | [02-arty-pong](https://github.com/XhovaniM8/02-arty-pong) | VGA Pong on the Arty Z7-10 + Digilent Pmod VGA (RGB444, 1024x768@60Hz) | In progress |
+| [eth-header](https://github.com/XhovaniM8/eth-header) | 64-bit AXI4-Stream block that prepends an Ethernet II header, with full tvalid/tready backpressure and byte re-alignment of the payload (14-byte header isn't a multiple of 8). Self-checking byte-exact testbench, non-project Vivado flow | Mostly done |
+| [a-very-simple-switch-fabric](https://github.com/XhovaniM8/a-very-simple-switch-fabric) | Parameterizable N×M switch fabric: per-input FIFOs, request matrix, fixed-priority per-output arbiters. Icarus and Verilator testbenches | Done |
+| [riscv16](https://github.com/XhovaniM8/riscv16) | 16-bit RiSC-16 processor in SystemVerilog. ALU verified with a Verilator/C++ testbench and VCD traces; top-level integration pending | In progress |
+| [sram-bist](https://github.com/XhovaniM8/sram-bist) | SRAM built-in self-test engine (March C-, March A, checkerboard patterns) synthesized on the ASAP7 7nm PDK with Cadence Genus. NYU ECE 6443 | Done |
 
 ## Fundamentals
+
+What each fundamental means in practice, and where it gets proven.
 
 | Fundamental | Mastery looks like | Proven in |
 |---|---|---|
@@ -30,7 +34,7 @@ The roadmap is built to master FPGA fundamentals, not to fake a trading stack. E
 | **FSM design** | Clean, glitch-free FSMs for serial protocols and handshakes | 04, 05 |
 | **Timing closure** | Hits a stated Fmax; reads the critical path; fixes it by pipelining or restructuring, with before/after WNS | 06, 08, 10 |
 | **Constraint writing** | Every clock defined; every CDC exception chosen deliberately (`set_false_path` vs `set_max_delay -datapath_only`); IO timing | 03, 04, 06 |
-| **Streaming datapaths** | AXI-Stream valid/ready; processes data as it arrives (no whole-packet buffering); correct under backpressure | 07, 09 |
+| **Streaming datapaths** | AXI-Stream valid/ready; processes data as it arrives (no whole-packet buffering); correct under backpressure | eth-header, 07, 09 |
 | **Memory architecture** | BRAM inference, dual-port use, read-modify-write hazards handled with forwarding | 08 |
 | **Protocol parsing** | Big-endian field extraction, framing, sequence-gap detection, malformed-input handling | 07, 09, rmii-mac |
 | **Ethernet without vendor IP** | MAC framing, preamble/SFD, CRC32, interframe gap written in RTL | rmii-mac |
